@@ -3,7 +3,7 @@
 <meta content="Парус Микита" property="og:title">
 <meta content="Домашня робота з інформатики" property="og:description">
 <style>
-canvas {
+a {
 	z-index: 99;
 	position:absolute;
 }
@@ -15,6 +15,7 @@ body {
 </head>
 
 <body>
+<a href="./school.glb">Посилання на модель</a>
 <script type="importmap">
 			{
 				"imports": {
@@ -46,7 +47,7 @@ body {
 				scene = new THREE.Scene();
 
 				new RGBELoader()
-					.setPath( '/' )
+					.setPath( './' )
 					.load( 'venice_sunset_1k.hdr', function ( texture ) {
 
 						texture.mapping = THREE.EquirectangularReflectionMapping;
