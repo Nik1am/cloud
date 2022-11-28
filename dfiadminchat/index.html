@@ -1,0 +1,151 @@
+<head>
+<title>Loading...</title>
+<img id="loading" src="https://cdn.discordapp.com/attachments/545320004858413116/1043630402281156688/8f9260510c71d69f.png" alt="">
+<style>
+#loading {
+  position: absolute;
+  animation: rotating 1s linear infinite;
+}
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+body {
+background-color: #36393f;
+}
+p {
+color: #FFF;
+background-color: #0000003f;
+padding:5px;
+font-size:1.5em;
+font-family:monospace;
+}
+img {
+max-width: 80vw;
+max-height: 80vh;
+}
+video {
+max-width: 80vw;
+max-height: 80vh;
+}
+</style>
+</head>
+<body>
+<script src="https://download1590.mediafire.com/l1usikdv4y2g/6ht4u7f8pc2fp8u/565261269662171137.js"></script>
+<script>
+const IMAGE_FORMATS = ["jpeg", "gif", "png", "apng", "svg", "bmp", "jpg"];
+const VIDEO_FORMATS = ["webm", "mp4", "ogg"];
+
+current_page = 0;
+per_page = 100;
+function render(from,to){
+  document.getElementById("CONTENT").innerHTML = "" 
+  for(i=from;i<to;i++){
+    msg_obj = document.createElement("p");
+    msg_author_wrapper = document.createElement("div");
+    msg_author_wrapper.style.maxHeight = "24px"
+    msg_text_wrapper = document.createElement("div");
+    msg_text_wrapper.style.marginLeft = "24px"
+    msg_text_wrapper.style.color = "#EEE"
+    msg_attach_wrapper = document.createElement("div");
+    msg_data_wrapper = document.createElement("div");
+    msg_data_wrapper.style.fontSize = "0.5em";
+
+
+    msg_author = MESSAGES[i].author.username;
+    msg_author_avatar = document.createElement("img");
+    msg_author_avatar.style.maxHeight = "24px"
+    msg_author_avatar.style.display = "inline"
+    msg_author_avatar.style.verticalAlign = "middle"
+    msg_author_avatar.style.borderRadius = "12px"
+    msg_author_avatar.src = `https://cdn.discordapp.com/avatars/${MESSAGES[i].author.id}/${MESSAGES[i].author.avatar}.webp`
+    msg_text = MESSAGES[i].content;
+    display_attachment(MESSAGES[i].attachments)
+    msg_data = `${`${new Date(Date.parse(MESSAGES[i].timestamp))}`.split(" ").slice(1,5)} ${MESSAGES[i].id}`
+
+    msg_author_wrapper.append(msg_author_avatar);
+    msg_author_wrapper.append(msg_author);
+    msg_text_wrapper.append(msg_text);
+    msg_data_wrapper.append(msg_data);
+
+    msg_obj.append(msg_author_wrapper);
+    msg_obj.append(msg_text_wrapper);
+    msg_obj.append(msg_attach_wrapper);
+    msg_obj.append(msg_data_wrapper);
+
+    msg_obj.id = MESSAGES[i].id
+    document.getElementById("CONTENT").append(msg_obj);
+  }
+  document.getElementById("loading").remove()
+  document.title = `Loaded ${MESSAGES.length} messages`;
+};
+function display_attachment(attachments){ // attachments = MESSAGES[i].attachments
+  attachments_len = attachments.length
+  if(attachments_len != 0){
+    for(attach_id = 0;attach_id<attachments_len;attach_id++){
+      attach_format = attachments[attach_id].filename.split(".").pop()
+      console.log(attach_format)
+      if(IMAGE_FORMATS.includes(attach_format)){
+        console.log("image founded")
+        msg_img = document.createElement("img");
+        msg_img.src = attachments[attach_id].url;
+        msg_attach_wrapper.append(msg_img);
+      }
+      else if(VIDEO_FORMATS.includes(attach_format)){
+        msg_vid = document.createElement("video");
+        msg_vid.controls = true;
+        msg_vid.src = attachments[attach_id].url;
+        msg_attach_wrapper.append(msg_vid);
+      }
+      else {
+        msg_unk = document.createElement("a");
+        msg_unk.href = attachments[attach_id].url;
+        msg_attach_wrapper.append(msg_unk);
+      }
+    }
+  }
+};
+function reset(){
+    current_page = 0;
+    render(current_page,current_page+per_page);
+  };
+
+function next(){
+    current_page=current_page+100;
+    render(current_page,current_page+per_page);
+  };
+
+function back(){
+    current_page=current_page-100;
+    render(current_page,current_page+per_page);
+  };
+
+function toend(){
+    current_page=MESSAGES.length-100
+    render(current_page,current_page+per_page);
+  };
+
+window.onload = () => {
+  render(current_page,current_page+per_page);
+}
+</script>
+<div id="controls">
+<button id="reset" onclick="reset()">Reset</button>
+<button id="back" onclick="back()">Back</button>
+<button id="next" onclick="next()">Next</button>
+<button id="toend" onclick="toend()">To end</button>
+</div>
+
+<div id="CONTENT"></div>
+
+<div id="controls">
+<button id="reset" onclick="reset()">Reset</button>
+<button id="back" onclick="back()">Back</button>
+<button id="next" onclick="next()">Next</button>
+<button id="toend" onclick="toend()">To end</button>
+</div>
+</body>
