@@ -44,6 +44,7 @@ current_page = 0;
 per_page = 100;
 function render(from,to){
   document.getElementById("CONTENT").innerHTML = "" 
+  document.getElementById("loading").remove()
   for(i=from;i<to;i++){
     msg_obj = document.createElement("p");
     msg_author_wrapper = document.createElement("div");
@@ -80,7 +81,6 @@ function render(from,to){
     msg_obj.id = MESSAGES[i].id
     document.getElementById("CONTENT").append(msg_obj);
   }
-  document.getElementById("loading").remove()
   document.title = `Loaded ${MESSAGES.length} messages`;
 };
 function display_attachment(attachments){ // attachments = MESSAGES[i].attachments
