@@ -1,0 +1,29 @@
+<style type="text/css">
+      h1{
+        text-align: center; color: #ff00ff;
+      }
+      h1{
+        text-align: center; color: #ff00ff;
+      }
+      .redcolor{
+        color: red; font-weight: bold;
+        background-color: yellow;
+      }
+      .bluecolor{
+        color: blue; font-weight: bold;
+        border: black solid 2px;
+      }
+      .greencolor{
+        color: green; font-weight: bold;
+      }
+      body{
+        background-color: lightgrey;
+      }
+      img{
+        width: 200px;
+        margin-right: 20px;
+      }
+      div{
+        text-align: center;
+      }
+</style>
